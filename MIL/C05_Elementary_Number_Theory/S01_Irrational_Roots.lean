@@ -1,6 +1,6 @@
 import MIL.Common
 import Mathlib.Data.Nat.Factorization.Basic
-import Mathlib.Data.Nat.Prime.Basic
+import Mathlib.Data.Nat.Prime
 /- OMIT:
 -- fix this.
 -- import Mathlib.Data.Real.Irrational
@@ -344,11 +344,12 @@ we need to know that ``r`` is positive.
 But when ``r`` is zero, the theorem below is trivial, and easily
 proved by the simplifier.
 So the proof is carried out in cases.
-The line ``rcases r with _ | r`` replaces the goal with two versions:
+The line ``cases r with r`` replaces the goal with two versions:
 one in which ``r`` is replaced by ``0``,
-and the other in which ``r`` is replaces by ``r + 1``.
+and the other in which ``r`` is replaces by ``r.succ``,
+the successor of ``r``.
 In the second case, we can use the theorem ``r.succ_ne_zero``, which
-establishes ``r + 1 ≠ 0`` (``succ`` stands for successor).
+establishes ``r.succ ≠ 0``.
 
 Notice also that the line that begins ``have : npow_nz`` provides a
 short proof-term proof of ``n^k ≠ 0``.
@@ -358,13 +359,9 @@ and then think about how the tactics describe the proof term.
 See if you can fill in the missing parts of the proof below.
 At the very end, you can use ``Nat.dvd_sub'`` and ``Nat.dvd_mul_right``
 to finish it off.
-
-Note that this example does not assume that ``p`` is prime, but the
-conclusion is trivial when ``p`` is not prime since ``r.factorization p``
-is then zero by definition, and the proof works in all cases anyway.
 BOTH: -/
 -- QUOTE:
-example {m n k r : ℕ} (nnz : n ≠ 0) (pow_eq : m ^ k = r * n ^ k) {p : ℕ} :
+example {m n k r : ℕ} (nnz : n ≠ 0) (pow_eq : m ^ k = r * n ^ k) {p : ℕ} (prime_p : p.Prime) :
     k ∣ r.factorization p := by
   rcases r with _ | r
   · simp
@@ -375,8 +372,8 @@ example {m n k r : ℕ} (nnz : n ≠ 0) (pow_eq : m ^ k = r * n ^ k) {p : ℕ} :
 SOLUTIONS: -/
     rw [factorization_pow']
 -- BOTH:
-  have eq2 : ((r + 1) * n ^ k).factorization p =
-      k * n.factorization p + (r + 1).factorization p := by
+  have eq2 : (r.succ * n ^ k).factorization p =
+      k * n.factorization p + r.succ.factorization p := by
 /- EXAMPLES:
     sorry
 SOLUTIONS: -/

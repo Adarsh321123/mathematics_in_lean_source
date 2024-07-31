@@ -1,6 +1,6 @@
 -- BOTH:
 import Mathlib.Data.Set.Lattice
-import Mathlib.Data.Nat.Prime.Basic
+import Mathlib.Data.Nat.Prime
 import MIL.Common
 
 /- TEXT:
@@ -647,8 +647,8 @@ example : (⋃ p ∈ primes, { x | x ≤ p }) = univ := by
   apply eq_univ_of_forall
   intro x
   simp
-  rcases Nat.exists_infinite_primes x with ⟨p, pge, primep⟩
-  use p, primep
+  rcases Nat.exists_infinite_primes x with ⟨p, primep, pge⟩
+  use p, pge
 
 -- BOTH:
 end

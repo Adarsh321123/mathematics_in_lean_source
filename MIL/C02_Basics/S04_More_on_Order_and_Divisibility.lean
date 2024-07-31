@@ -174,7 +174,7 @@ It is an interesting fact that ``min`` distributes over ``max``
 the way that multiplication distributes over addition,
 and vice-versa.
 In other words, on the real numbers, we have the identity
-``min a (max b c) = max (min a b) (min a c)``
+``min a (max b c) ≤ max (min a b) (min a c)``
 as well as the corresponding version with ``max`` and ``min``
 switched.
 But in the next section we will see that this does *not* follow
@@ -353,7 +353,7 @@ example : Nat.gcd m n = Nat.gcd n m := by
   sorry
 SOLUTIONS: -/
   apply Nat.dvd_antisymm
-  repeat
+  repeat'
     apply Nat.dvd_gcd
     apply Nat.gcd_dvd_right
     apply Nat.gcd_dvd_left
